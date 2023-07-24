@@ -12,8 +12,10 @@ app.use(express.urlencoded({extended: true}))
 
 // route
 import authRoutes from "./modules/auth/auth.route";
+import adminRoutes from "./modules/admin/admin.route";
 
 app.use("/auth/v1", authRoutes);
+app.use("/admin/v1", adminRoutes);
 
 app.get('/', (_req: Request, res: Response) => {
   return res.send('Team Management System Connected')
