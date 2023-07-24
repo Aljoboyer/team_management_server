@@ -80,6 +80,7 @@ export const getUserController = async (req: Request, res: Response) => {
    res.send(user)
   });
 }
+
 function authenticateToken(req: Request, res: Response, next: any) {
   // console.log('Hitted broo', req)
   const authHeader = req.headers.authorization;

@@ -8,7 +8,11 @@ export const TeamSchema = new Schema<ICreateTeam>({
     },
     category:  {
         type: String,
-    }
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'TeamUser'
+       },
 },{
     timestamps: true
 })

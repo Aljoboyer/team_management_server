@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
 
 export interface ICreateTeam {
     teamName: string,
-    category: string, 
+    category: string,
+    createdBy: Types.ObjectId
 }
