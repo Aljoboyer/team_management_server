@@ -3,6 +3,7 @@ import { Team } from './createTeam.schema';
 import { IUser } from '../auth/auth.interface';
 import { ObjectId } from 'mongodb';
 import { TeamUser } from '../auth/auth.schema';
+import { TeamMember } from './teamInvite.schema';
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const SecretKey = "te@mM@n@gement";
@@ -66,3 +67,15 @@ export const getAllUser = async (req: Request, res: Response) => {
           console.log(error);
         }
       };
+
+export const inviteTeamMember = async (req: Request, res: Response) => {
+  const inviteData = req.body
+  try {
+    const userData = await TeamMember.insertMany(inviteData);
+    res.send({status: 200, message: 'Member Invited Successfully'})
+
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    console.log(error);
+  }
+};
