@@ -45,9 +45,22 @@ export const getAllTeams = async (req: Request, res: Response) => {
           if (err) {
             return res.status(403).json({ error: 'Invalid token' });
           }
+          const findUser: any = await TeamUser.findOne({email: user.email})
+  
+           if(findUser?.role == 'admin'){
+            const teams = await Team.find({ createdBy: new ObjectId(user.id) }).populate('createdBy');
+            res.send(teams)
+          }
+          else if(findUser?.role == 'user'){
 
-          const teams = await Team.find({ createdBy: new ObjectId(user.id) }).populate('createdBy');
-          res.send(teams)
+            const teams = await TeamMember.find({ email: user.email }).populate({
+            path: 'teamDetails', 
+            populate: {
+              path: 'createdBy',
+            }})
+            res.send(teams)
+          }
+        
         });
   
       } catch (error) {
