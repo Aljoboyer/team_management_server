@@ -33,8 +33,8 @@ export const signInHandler = async (req: Request, res: Response) => {
 
 // User Signup
 export const userSignUpController = async (req: Request, res: Response) => {
-  console.log('Hitted', req.body)
-    const { email, password, name } = req.body;
+
+    const { email, password, name, role, profileImg } = req.body;
 
     try {
       const oldUser = await TeamUser.findOne({ email: email });
@@ -49,9 +49,11 @@ export const userSignUpController = async (req: Request, res: Response) => {
         email: email,
         password: hashedPassword,
         name: name,
+        role: role,
+        profileImg: profileImg
       });
   
-    const token = jwt.sign({ email: result.email, id: result._id }, SecretKey ,{
+    const token = jwt.sign({ email: result.email, id: result._id , role: result.role, name: result.name}, SecretKey ,{
       expiresIn: "1h",
     });
 
@@ -73,11 +75,12 @@ export const getUserController = async (req: Request, res: Response) => {
     return res.status(401).json({ error: 'Missing token' });
   }
 
-  jwt.verify(token, SecretKey, (err: any, user: IUser) => {
+  jwt.verify(token, SecretKey, async (err: any, user: IUser) => {
     if (err) {
       return res.status(403).json({ error: 'Invalid token' });
     }
-   res.send(user)
+    const findUser = await TeamUser.findOne({email: user.email})
+   res.send(findUser)
   });
 }
 

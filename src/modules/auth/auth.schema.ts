@@ -16,10 +16,7 @@ export const TeamUserSchema = new Schema<IUser>({
     name: {
         type: String,
     },
-    createdAt:  {
-        type: String,
-    },
-    updatedAt:  {
+    profileImg:  {
         type: String,
     }
 },{
