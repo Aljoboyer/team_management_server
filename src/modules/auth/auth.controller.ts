@@ -11,7 +11,7 @@ export const signInHandler = async (req: Request, res: Response) => {
   const { email, password } = req.body; 
 
   try {
-    const oldUser = await TeamUser.findOne({ email });
+    const oldUser = await TeamUser.findOne({ email: email });
     if (!oldUser)
       return res.status(404).json({ message: "User doesn't exist" });
 

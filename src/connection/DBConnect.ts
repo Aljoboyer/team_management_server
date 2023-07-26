@@ -10,7 +10,6 @@ const connectDB = () => {
   const options: MongoClientOptions = {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-       // version: ServerApiVersion.v1,
   };
 
   try {

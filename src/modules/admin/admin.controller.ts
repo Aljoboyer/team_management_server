@@ -27,7 +27,7 @@ export const createTeamController = async (req: Request, res: Response) => {
       res.status(500).json({ message: "Something went wrong" });
       console.log(error);
     }
-  };
+};
 
 export const getAllTeams = async (req: Request, res: Response) => {
     // console.log('Hitted all ', req)
@@ -53,7 +53,7 @@ export const getAllTeams = async (req: Request, res: Response) => {
           }
           else if(findUser?.role == 'user'){
 
-            const teams = await TeamMember.find({ email: user.email }).populate({
+            const teams = await TeamMember.find({ email: user.email, status: { $in: ['Active', 'Pending'] }}).populate({
             path: 'teamDetails', 
             populate: {
               path: 'createdBy',
@@ -67,19 +67,19 @@ export const getAllTeams = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Something went wrong" });
         console.log(error);
       }
-    };
+};
 
 export const getAllUser = async (req: Request, res: Response) => {
 
         try {
-          const userData = await TeamUser.find({  });
+          const userData = await TeamUser.find({role: 'user'});
           res.send(userData)
     
         } catch (error) {
           res.status(500).json({ message: "Something went wrong" });
           console.log(error);
         }
-      };
+};
 
 export const inviteTeamMember = async (req: Request, res: Response) => {
   const inviteData = req.body
