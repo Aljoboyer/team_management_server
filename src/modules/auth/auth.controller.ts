@@ -53,7 +53,7 @@ export const userSignUpController = async (req: Request, res: Response) => {
         profileImg: profileImg
       });
   
-    const token = jwt.sign({ email: result.email, id: result._id , role: result.role, name: result.name}, SecretKey ,{
+    const token = jwt.sign({ email: result.email, id: result._id }, SecretKey ,{
       expiresIn: "1h",
     });
 
